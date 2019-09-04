@@ -1,0 +1,23 @@
+GEM
+  specs:
+    aws-sdk (2.11.154)
+      aws-sdk-resources (= 2.11.154)
+    aws-sdk-core (2.11.154)
+      aws-sigv4 (~> 1.0)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.11.154)
+      aws-sdk-core (= 2.11.154)
+    aws-sigv4 (1.0.3)
+    jmespath (1.4.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  aws-sdk
+
+RUBY VERSION
+   ruby 2.5.1p57
+
+BUNDLED WITH
+   2.0.2
