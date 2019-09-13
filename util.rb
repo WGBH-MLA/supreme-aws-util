@@ -14,7 +14,7 @@ class Parser
     args = Options.new()
 
     opt_parser = OptionParser.new do |opts|
-      opts.banner = "Usage: ruby test.rb [options]"
+      opts.banner = "Usage: ruby util.rb [options]"
 
       opts.on("--action=NAME", "Action To Take (swap, assign_ip)") do |n|
         args.action = n
