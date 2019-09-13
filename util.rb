@@ -3,10 +3,7 @@ require_relative 'ec2guy'
 require_relative 'eipguy'
 require_relative 'host'
 
-require 'pry'
-
-DEMO='3.229.79.133'
-PROD='3.217.206.149'
+# require 'pry'
 
 require 'optparse'
 
@@ -45,29 +42,8 @@ class Parser
     return args
   end
 end
+
 options = Parser.parse ARGV
-
-# @inst = EC2Guy.new('i-0b8e591a5b97100c5')
-
-# @eip_demo = EIPGuy.new(DEMO)
-# @eip_prod = EIPGuy.new(PROD)
-
-# puts "inst current ip:"
-# puts @inst.current_ip
-
-# puts "assigning #{PROD} to #{@inst.instance_id}"
-# @inst.assign_ip(@eip_prod)
-
-# puts "inst current ip:"
-# puts @inst.current_ip
-
-# puts "assigning #{DEMO} to #{@inst.instance_id}"
-# @inst.assign_ip(@eip_prod)
-
-# puts "inst current ip:"
-# puts @inst.current_ip
-
-# @host = Host.new('demo.aapb.wgbh-mla.org')
 
 def swap(host_one, host_two)
   host_one_ip = EIPGuy.new(host_one.public_ip)
@@ -105,3 +81,5 @@ case action
     raise 'No valid type arg!'
 end
   
+
+puts "Wow! I'm done"
