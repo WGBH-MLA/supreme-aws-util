@@ -23,10 +23,6 @@ class Parser
         args.hosts = h.split(',')
       end
 
-      opts.on("--public_ip=PUBLIC_IP", "Elastic IP Address") do |i|
-        args.public_ip = i
-      end
-
       opts.on("--instance_id=INSTANCE_ID", "EC2 Instance ID") do |id|
         args.instance_id = id
       end
@@ -60,10 +56,11 @@ def swap(host_one, host_two)
   host_two_ec2.assign_ip(host_one_ip)
 end
 
-def assign_ip(public_ip, instance_id)
+def assign_ip_to_instance(public_ip, instance_id)
   instance = EC2Guy.new(instance_id)
   ip = EIPGuy.new(public_ip)
   raise 'Bad Args!' unless instance && ip
+  instance.dump_ip
   instance.assign_ip(ip)
 end
 
@@ -78,9 +75,10 @@ case action
     raise "Host #{host2.input} could not be reached!" unless host2.public_ip
     swap(host1, host2)
   when 'assign_ip'
-    raise 'Missing public ip!' unless options[:public_ip]
-    raise 'Missing instance id!' unless options[:instance_id]
-    assign_ip(options[:public_ip], options[:instance_id])
+    raise "Missing instance id!" unless options[:instance_id]
+    raise "You didn't pass in a public IP to assign..." unless options[:hosts] && options[:hosts].first
+    raise "Too many hosts passed in - you simply must be joking!" unless options[:hosts].count == 1
+    assign_ip_to_instance(options[:hosts].first, options[:instance_id])
   else
     raise 'No valid type arg!'
 end
