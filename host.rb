@@ -1,19 +1,32 @@
 require 'uri'
+require 'resolv'
 
 class Host
 
-  def initialize(name)
+  def initialize(input)
 
     @public_ip = begin
-      name = URI.parse(name).host if name.start_with? 'http'
-      IPSocket.getaddress(name)
-    rescue SocketError
-      false # Can return anything you want here
+
+      # they passed in an ip
+      if input =~ Resolv::IPv4::Regex
+        input
+      else
+
+        begin
+
+          input = URI.parse(input).host if input.start_with? 'http'
+          IPSocket.getaddress(input)
+        rescue SocketError
+
+          false # Can return anything you want here
+        end
+      end
+
     end
 
-    @name = name
+    @input = input
   end
 
-  attr_accessor :name
+  attr_accessor :input
   attr_accessor :public_ip
 end
